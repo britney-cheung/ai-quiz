@@ -17,6 +17,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .q-label{font-size:12px;color:#888;margin-bottom:0.4rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
 .q-text{font-size:1.1rem;font-weight:600;color:#1a1a1a;margin-bottom:0.25rem;line-height:1.4}
 .q-desc{font-size:0.9rem;color:#666;margin-bottom:1.2rem;line-height:1.5}
+.q-img{width:100%;border-radius:10px;margin-bottom:1.2rem;display:none}
 .options{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.2rem}
 .opt-btn{padding:0.75rem 1rem;border:1px solid #ccd9e8;border-radius:12px;background:white;color:#1a1a1a;font-size:0.95rem;cursor:pointer;text-align:left;transition:all 0.15s;line-height:1.4}
 .opt-btn:hover{border-color:#378ADD;background:#E6F1FB;color:#0C447C}
@@ -88,6 +89,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <div class="q-label" id="q-label"></div>
     <div class="q-text" id="q-text"></div>
     <div class="q-desc" id="q-desc"></div>
+    <img id="q-img" class="q-img" src="" alt="Quiz chart">
     <div class="options" id="options-container"></div>
     <div class="nav-row">
       <button class="btn-back" id="btn-back" onclick="goBack()">← Back</button>
@@ -120,13 +122,11 @@ let correctPredictions = Math.floor(TOTAL_TAKERS * 0.31);
 
 const questions = [
   {
-  id:"q1",label:"Question 1 of 13",
-  text:"Where do you think you'll land?",
-  desc:"Make your prediction — we'll compare it to your actual result at the end!",
-  img:"lavydvq4uyfz42ejqgdc.webp",
-  type:"single",
-  ...
-  }
+    id:"q1",label:"Question 1 of 13",
+    text:"Where do you think you'll land?",
+    desc:"Make your prediction — we'll compare it to your actual result at the end!",
+    img:"lavydvq4uyfz42ejqgdc.webp",
+    type:"single",
     options:[
       {text:"🧠 Lover Expert",lv:0,ex:0,tag:"lover_expert"},
       {text:"😊 Lover Novice",lv:0,ex:0,tag:"lover_novice"},
@@ -226,10 +226,10 @@ const questions = [
     type:"image",
     correctIndex:3,
     options:[
-      {text:"Option A",imgSrc:"https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fworlds-most-hyper-realistic-ai-generated-images-v0-16ym6ptxv6ld1.jpeg%3Fwidth%3D3000%26format%3Dpjpg%26auto%3Dwebp%26s%3D281bdb61801545a3d3b5d4da822f5fc7ac9bfead",lv:0,ex:-1},
-      {text:"Option B",imgSrc:"https://media.fab.com/image_previews/listing_thumbnails/a80eaffc-a2c3-4ee7-998f-6850d13b7863/bb1fcaa5-b5b6-494c-9b26-6b82d249e804.jpg",lv:0,ex:-1},
-      {text:"Option C",imgSrc:"https://www.cnet.com/a/img/resize/9bc40269d1d45ddb31e6f099cea3f2869161499a/hub/2023/11/14/c11361f8-bd25-4aa2-9bce-0ca8dc3f1b93/jamesco-smiling-old-woman-seated-on-thailand-beach-hut-bar-kaya-fe426fc8-3238-4b40-bf5c-45d212e0a1ca.png?auto=webp&width=1200",lv:0,ex:-1},
-      {text:"Option D",imgSrc:"https://pleated-jeans.com/wp-content/uploads/2025/08/incredible-pictures-that-seem-ai-or-photoshopped-but-are-100-real-16.jpg.webp",lv:0,ex:2}
+      {text:"Option A",imgSrc:"worlds-most-hyper-realistic-ai-generated-images-v0-16ym6ptxv6ld1.webp",lv:0,ex:-1},
+      {text:"Option B",imgSrc:"https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80",lv:0,ex:-1},
+      {text:"Option C",imgSrc:"https://images.unsplash.com/photo-1684369175833-4b445ad6bfb5?w=400&q=80",lv:0,ex:-1},
+      {text:"Option D",imgSrc:"https://images.unsplash.com/photo-1586348943529-beaae6c28db9?w=400&q=80",lv:0,ex:2}
     ]
   },
   {
@@ -304,6 +304,14 @@ function renderQuestion(){
   document.getElementById('q-label').textContent=q.label;
   document.getElementById('q-text').textContent=q.text;
   document.getElementById('q-desc').textContent=q.desc||'';
+  const qImg=document.getElementById('q-img');
+  if(q.img){
+    qImg.src=q.img;
+    qImg.style.display='block';
+  } else {
+    qImg.src='';
+    qImg.style.display='none';
+  }
   document.getElementById('progress-fill').style.width=((currentQ/questions.length)*100)+'%';
   document.getElementById('btn-back').style.visibility=currentQ===0?'hidden':'visible';
   document.getElementById('btn-next').disabled=true;
